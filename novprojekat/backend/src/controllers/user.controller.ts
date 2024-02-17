@@ -131,7 +131,7 @@ export class UserController{
         let selectedSubjectsArray = selectedSubjectsString.split(",")
         let selectedAgeGroupsString = req.body.selectedAgeGroupsList as String;
         let selectedAgeGroupsArray = selectedAgeGroupsString.split(",")
-        console.log(selectedSubjectsArray)
+ 
         tmpUser!.selectedSubjectsList = selectedSubjectsArray;
         tmpUser!.selectedAgeGroupsList = selectedAgeGroupsArray;
         tmpUser!.source = req.body.source
