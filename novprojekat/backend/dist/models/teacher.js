@@ -43,10 +43,10 @@ let Teacher = new Schema({
         type: String
     },
     selectedSubjectsList: {
-        type: String
+        type: Array
     },
     selectedAgeGroupsList: {
-        type: String
+        type: Array
     },
     source: {
         type: String

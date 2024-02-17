@@ -127,8 +127,13 @@ export class UserController{
 
     registerTeacherII = async (req: express.Request, res: express.Response)=>{
         let tmpUser = await TeacherModel.findOne({ "username": req.body.username })
-        tmpUser!.selectedSubjectsList = req.body.selectedSubjectsList;
-        tmpUser!.selectedAgeGroupsList = req.body.selectedAgeGroupsList;
+        let selectedSubjectsString = req.body.selectedSubjectsList as String;
+        let selectedSubjectsArray = selectedSubjectsString.split(",")
+        let selectedAgeGroupsString = req.body.selectedAgeGroupsList as String;
+        let selectedAgeGroupsArray = selectedAgeGroupsString.split(",")
+        console.log(selectedSubjectsArray)
+        tmpUser!.selectedSubjectsList = selectedSubjectsArray;
+        tmpUser!.selectedAgeGroupsList = selectedAgeGroupsArray;
         tmpUser!.source = req.body.source
         tmpUser!.cvFile = req.file?.buffer 
         tmpUser!.approval = 0;

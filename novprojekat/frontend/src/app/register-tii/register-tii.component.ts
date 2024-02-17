@@ -45,6 +45,7 @@ export class RegisterTIIComponent implements OnInit{
   }
 
   register(selectedSubjectsList:any, selectedAgeGroupsList:any){
+    
     this.userService.registerTeacherII(
       selectedSubjectsList,
       selectedAgeGroupsList,

@@ -118,8 +118,13 @@ class UserController {
         this.registerTeacherII = (req, res) => __awaiter(this, void 0, void 0, function* () {
             var _a;
             let tmpUser = yield teacher_1.default.findOne({ "username": req.body.username });
-            tmpUser.selectedSubjectsList = req.body.selectedSubjectsList;
-            tmpUser.selectedAgeGroupsList = req.body.selectedAgeGroupsList;
+            let selectedSubjectsString = req.body.selectedSubjectsList;
+            let selectedSubjectsArray = selectedSubjectsString.split(",");
+            let selectedAgeGroupsString = req.body.selectedAgeGroupsList;
+            let selectedAgeGroupsArray = selectedAgeGroupsString.split(",");
+            console.log(selectedSubjectsArray);
+            tmpUser.selectedSubjectsList = selectedSubjectsArray;
+            tmpUser.selectedAgeGroupsList = selectedAgeGroupsArray;
             tmpUser.source = req.body.source;
             tmpUser.cvFile = (_a = req.file) === null || _a === void 0 ? void 0 : _a.buffer;
             tmpUser.approval = 0;
@@ -157,6 +162,10 @@ class UserController {
                 //     // Return an error response
                 res.json('Error');
             }
+        });
+        this.teachersInfo = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const activeTeachers = yield teacher_1.default.countDocuments({ approval: 1 });
+            const activeStudents = yield student_1.default.countDocuments();
         });
     }
 }
