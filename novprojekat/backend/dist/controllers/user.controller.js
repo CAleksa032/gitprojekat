@@ -15,6 +15,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserController = void 0;
 const student_1 = __importDefault(require("../models/student"));
 const teacher_1 = __importDefault(require("../models/teacher"));
+const subject_1 = __importDefault(require("../models/subject"));
 const defaultPicture_1 = require("../defaultPic/defaultPicture");
 const user_1 = require("../models/user");
 class UserController {
@@ -122,7 +123,6 @@ class UserController {
             let selectedSubjectsArray = selectedSubjectsString.split(",");
             let selectedAgeGroupsString = req.body.selectedAgeGroupsList;
             let selectedAgeGroupsArray = selectedAgeGroupsString.split(",");
-            console.log(selectedSubjectsArray);
             tmpUser.selectedSubjectsList = selectedSubjectsArray;
             tmpUser.selectedAgeGroupsList = selectedAgeGroupsArray;
             tmpUser.source = req.body.source;
@@ -166,6 +166,30 @@ class UserController {
         this.teachersInfo = (req, res) => __awaiter(this, void 0, void 0, function* () {
             const activeTeachers = yield teacher_1.default.countDocuments({ approval: 1 });
             const activeStudents = yield student_1.default.countDocuments();
+        });
+        this.teachers = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            const teachers = yield teacher_1.default.find({ approval: 0 });
+            res.json(teachers);
+        });
+        this.teachersApprove = (req, res) => __awaiter(this, void 0, void 0, function* () {
+            console.log(req.body.email);
+            let teacher = yield teacher_1.default.findOne({ 'email': req.body.email });
+            console.log(teacher);
+            teacher.selectedSubjectsList.forEach((subject) => __awaiter(this, void 0, void 0, function* () {
+                let subjectbase = yield subject_1.default.findOne({ subject: subject });
+                if (!subjectbase) {
+                    let tmpSubject = new subject_1.default({
+                        subject: subject,
+                        teaching: teacher.username
+                    });
+                    yield tmpSubject.save();
+                }
+                else {
+                    subjectbase.teaching.push(teacher.username);
+                    subjectbase.save();
+                }
+            }));
+            res.json({ message: 'ok' });
         });
     }
 }

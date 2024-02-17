@@ -15,4 +15,6 @@ userRouter.route('/registerTeacherI').post(upload.single("profilePicture"), (req
 userRouter.route('/registerTeacherII').post(upload.single("cvFile"), (req, res) => new user_controller_1.UserController().registerTeacherII(req, res));
 userRouter.route('/passwordChange').patch((req, res) => new user_controller_1.UserController().passwordChange(req, res));
 userRouter.route('/teachers-info').get((req, res) => new user_controller_1.UserController().teachersInfo(req, res));
+userRouter.route('/teachers').get((req, res) => new user_controller_1.UserController().teachers(req, res));
+userRouter.route('/teachersApprove').post((req, res) => new user_controller_1.UserController().teachersApprove(req, res));
 exports.default = userRouter;

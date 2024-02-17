@@ -9,11 +9,11 @@ export class Teacher{
     email: string = ''
     schoolType: string = ''
     currentGrade: string = ''
-    profilePicture: Buffer = Buffer.alloc(0)
+    //profilePicture: Buffer = Buffer.alloc(0)
     type: string = ''
     selectedSubjectsList: string[] = []
     selectedAgeGroupsList: string[] = []
     source: string = ''
-    cvFile: string = ''
+    //cvFile: Buffer = Buffer.alloc(0)
     approval: number = 0
 }

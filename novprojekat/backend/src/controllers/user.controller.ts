@@ -1,6 +1,7 @@
 import express from 'express'
 import StudentModel from '../models/student'
 import TeacherModel from '../models/teacher'
+import SubjectModel from '../models/subject'
 import { defaultPicture } from '../defaultPic/defaultPicture'
 import { Request, Response } from 'express-serve-static-core'
 import { ParsedQs } from 'qs'
@@ -183,5 +184,32 @@ export class UserController{
         const activeTeachers = await TeacherModel.countDocuments({ approval: 1 });
         const activeStudents = await StudentModel.countDocuments();
 
+    }
+
+    teachers = async (req: express.Request, res: express.Response)=>{
+        const teachers = await TeacherModel.find({ approval: 0 });
+        res.json(teachers);
+    }
+
+    teachersApprove = async (req: express.Request, res: express.Response)=>{
+        console.log(req.body.email)
+        let teacher = await TeacherModel.findOne({ 'email': req.body.email });
+        console.log(teacher)
+        teacher!.selectedSubjectsList.forEach(async (subject: string) => {
+            let subjectbase = await SubjectModel.findOne({ subject: subject });
+            if(!subjectbase){
+                let tmpSubject = new SubjectModel({
+                    subject: subject,
+                    teaching: teacher!.username
+                })
+                await tmpSubject.save();
+            }else{
+                subjectbase.teaching.push(teacher!.username)
+                subjectbase.save()
+            }
+            
+        })
+
+        res.json({message :'ok'});
     }
 }

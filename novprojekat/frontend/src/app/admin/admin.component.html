@@ -1,1 +1,7 @@
-<p>admin works!</p>
+<h1>Teachers to Approve</h1>
+<ul>
+  <li *ngFor="let teacher of teachers">
+    {{ teacher.name }} {{ teacher.lastname }} - {{ teacher.email }}
+    <button (click)="approveTeacher(teacher.email)">Approve</button>
+  </li>
+</ul>

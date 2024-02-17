@@ -32,5 +32,12 @@ userRouter.route('/teachers-info').get(
     (req,res)=> new UserController().teachersInfo(req, res)
 )
 
+userRouter.route('/teachers').get(
+    (req,res)=> new UserController().teachers(req, res)
+)
+
+userRouter.route('/teachersApprove').post(
+    (req,res)=> new UserController().teachersApprove(req, res)
+)
 
 export default userRouter;
