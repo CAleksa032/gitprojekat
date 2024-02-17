@@ -1,0 +1,41 @@
+<h2>Register Teacher second step</h2>
+<br/>
+    <form ngNativeValidate #myForm="ngForm" (ngSubmit)="submitForm(myForm)">
+        <label>Which subjects do you want to teach? (Select multiple)</label>
+
+        <div *ngFor="let subject of subjectsList">
+          <input type="checkbox" id="{{subject}}" name="subjects" [(ngModel)]="selectedSubjects[subject]">
+          <label for="{{subject}}">{{subject}}</label>
+        </div>
+
+        <div *ngIf="selectedSubjects['Something else']">
+            <label for="newSubject">Enter new subject:</label>
+            <input type="text" id="newSubject" name="newSubject" [(ngModel)]="newSubject">
+          </div>
+    
+        <br>
+
+        <label>Which age groups do you want to teach? (Select multiple)</label>
+
+        <div *ngFor="let ageGroup of ageGroupsList">
+          <input type="checkbox" id="{{ageGroup}}" name="ageGroups" [(ngModel)]="selectedAgeGroups[ageGroup]">
+          <label for="{{ageGroup}}">{{ageGroup}}</label>
+        </div>
+    
+        <br>
+    
+        <label for="source">Where did you hear about our site?</label>
+        <input type="text" id="source" name="source" [(ngModel)]="source">
+    
+        <br>
+        
+        <label for="cvFile">CV:</label>
+        <input type="file" id="cvFile" name="cvFile" accept="application/pdf" (change)="onCvFileSelected($event)">
+        <br/>
+
+        <button type="submit">Register</button>
+    </form>
+    <br/>
+    {{ message }}
+
+
